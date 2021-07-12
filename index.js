@@ -1,6 +1,12 @@
-const data = require("../data/fake-users/users-posts.json");
+const express = require("express");
+const app = express();
+const port = process.PORT || 3000;
+const { getAllVehicles, getAllUsers } = require("./utils/helpers");
 
-const getAllVehicles = () => data.map((profile) => profile.vehicle);
+app.get("/", (req, res) => {
+  res.send("hello world!");
+});
 
-const getAllUsers = () =>
-  data.map((profile) => `${profile.firstName} ${profile.lastName}`);
+app.listen(port, () => {
+  console.log(`App is listening on port ${port}`);
+});
