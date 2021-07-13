@@ -1,6 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
-const { getAllVehicles, getAllUsers } = require("./utils/helpers");
+const userRoutes = require("./routes/users");
 
 const app = express();
 const port = process.PORT || 3000;
@@ -9,18 +9,32 @@ const port = process.PORT || 3000;
 app.use(helmet());
 
 // routes
-app.get("/", (req, res) => {
-  res.send("hello world!");
+app.get("/", (req, res, next) => {
+  res.send("root");
+});
+
+app.use("/users", userRoutes);
+
+// error handling
+app.use((err, req, res, next) => {
+  if (err.status === 404) {
+    res.status(404).send({
+      status: err.status,
+      message: err.message,
+    });
+  }
+
+  if (err.status === 500) {
+    res.status(500).send({
+      status: err.status,
+      message: err.message,
+    });
+  }
 });
 
 // all other route handling
 app.use((req, res, next) => {
-  res.status(404).send("404 Not Found");
-});
-
-// error handling
-app.use((err, req, res, next) => {
-  res.status(500).render("error", { error: err });
+  res.status(404).send("Path not found");
 });
 
 app.listen(port, () => {
