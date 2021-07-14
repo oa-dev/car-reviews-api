@@ -15,26 +15,20 @@ app.get("/", (req, res, next) => {
 
 app.use("/users", userRoutes);
 
-// error handling
-app.use((err, req, res, next) => {
-  if (err.status === 404) {
-    res.status(404).send({
-      status: err.status,
-      message: err.message,
-    });
-  }
-
-  if (err.status === 500) {
-    res.status(500).send({
-      status: err.status,
-      message: err.message,
-    });
-  }
+// all other non-route handling
+app.use((req, res, next) => {
+  res.status(404).send({
+    status: res.statusCode,
+    message: "Page not found!",
+  });
 });
 
-// all other route handling
-app.use((req, res, next) => {
-  res.status(404).send("Path not found");
+// error handling
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).send({
+    status: err.status || 500,
+    message: err.message || "Internal Server Error",
+  });
 });
 
 app.listen(port, () => {
