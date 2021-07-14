@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const helmet = require("helmet");
 const userRoutes = require("./routes/users");
 
@@ -10,7 +11,7 @@ app.use(helmet());
 
 // routes
 app.get("/", (req, res, next) => {
-  res.send("root");
+  res.sendFile(path.join(__dirname, "views/api.html"));
 });
 
 app.use("/users", userRoutes);
