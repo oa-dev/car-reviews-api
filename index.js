@@ -4,7 +4,8 @@ const helmet = require("helmet");
 const userRoutes = require("./routes/users");
 
 const app = express();
-const port = process.PORT || 3000;
+// use port 3000 unless a preconfigured port exists
+const port = process.env.PORT || 3000;
 
 // middleware
 app.use(helmet());
