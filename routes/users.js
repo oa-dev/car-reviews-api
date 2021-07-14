@@ -1,9 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const { getAllUsers, getUserById } = require("../utils/helpers");
+const {
+  getAllUsers,
+  getAllUsersNames,
+  getUserById,
+} = require("../utils/helpers");
 
-router.get("/", (req, res) => {
-  res.status(200).send(getAllUsers());
+router.get("/", (req, res, next) => {
+  const users = getAllUsers();
+  if (users.length) {
+    res.status(200).send(users);
+  } else {
+    const error = new Error("No users found!");
+    error.status = 404;
+    next(error);
+  }
+});
+
+router.get("/names", (req, res) => {
+  res.status(200).send(getAllUsersNames());
 });
 
 router.get("/:id", (req, res, next) => {
