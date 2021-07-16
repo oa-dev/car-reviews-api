@@ -9,6 +9,8 @@ const port = process.env.PORT || 3000;
 
 // middleware
 app.use(helmet());
+// serve static files
+app.use(express.static("public"));
 
 // routes
 app.get("/", (req, res, next) => {
