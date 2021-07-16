@@ -7,11 +7,7 @@ const getAllUsers = () => data.map((profile) => profile);
 const getAllUsersNames = () =>
   data.map((profile) => `${profile.firstName} ${profile.lastName}`);
 
-const getUserById = (id) => {
-  return data.filter((profile) => {
-    return profile.id.toString() === id;
-  });
-};
-// console.log(getUserById(6.327475));
+const getUserById = (id) =>
+  data.filter((profile) => profile.id.toString() === id);
 
 module.exports = { getAllVehicles, getAllUsers, getAllUsersNames, getUserById };
